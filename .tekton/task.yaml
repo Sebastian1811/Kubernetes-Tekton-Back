@@ -3,25 +3,24 @@ kind: Task
 metadata:
   name: build-task
 spec:
-  inputs:
-    params:
-      - name: repository
-        description: the git repo
-      - name: revision
-        description: the revision
-        default: master
-      - name: apikey
-        description: the ibmcloud api key
-      - name: api
-        description: the ibmcloud api endpoint
-        default: "https://cloud.ibm.com"
-      - name: registryNamespace
-        description: the ibmcloud registry namespace
-      - name: imageName
-        description: the base image name
-        default: "backend-tekton-image"
-      - name: registryRegion
-        description: the ibmcloud registry region
+  params:
+    - name: repository
+      description: the git repo
+    - name: revision
+      description: the revision
+      default: master
+    - name: apikey
+      description: the ibmcloud api key
+    - name: api
+      description: the ibmcloud api endpoint
+      default: "https://cloud.ibm.com"
+    - name: registryNamespace
+      description: the ibmcloud registry namespace
+    - name: imageName
+      description: the base image name
+      default: "backend-tekton-image"
+    - name: registryRegion
+      description: the ibmcloud registry region
   workspaces:
   - name: task-pvc
     mountPath: /artifacts   
@@ -88,6 +87,8 @@ spec:
           export GIT_COMMIT=$(git rev-parse HEAD);
           export REGISTRY_URL=$(ibmcloud cr info | sed "2q;d" | awk '{for(i=1;i<=NF;i++) if ($i=="Registry") print $(i+1)}');
           source scripts/build-docker-image.sh;
+
+          
 ---
 apiVersion: tekton.dev/v1alpha1
 kind: Task
