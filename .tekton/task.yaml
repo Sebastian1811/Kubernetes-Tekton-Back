@@ -3,7 +3,7 @@ kind: Task
 metadata:
   name: build-task
 spec:
-  
+  inputs:
     params:
       - name: repository
         description: the git repo
@@ -30,9 +30,9 @@ spec:
       image: alpine/git
       env:
         - name: REPOSITORY
-          value: $(params.repository)
+          value: $(inputs.params.repository)
         - name: REVISION
-          value: $(params.revision)
+          value: $(inputs.params.revision)
       command: ["/bin/sh", "-c"]
       args:
         - set -e -o pipefail;
@@ -42,17 +42,17 @@ spec:
       image: ibmcom/pipeline-base-image
       env:
         - name: IBMCLOUD_API_KEY
-          value: $(params.apikey)
+          value: $(inputs.params.apikey)
         - name: API
-          value: $(params.api)
+          value: $(inputs.params.api)
         - name: REGION
-          value: $(params.registryRegion)
+          value: $(inputs.params.registryRegion)
         - name: HOME
           value: "/root"
         - name: REGISTRY_NAMESPACE
-          value: $(params.registryNamespace)
+          value: $(inputs.params.registryNamespace)
         - name: IMAGE_NAME
-          value: $(params.imageName)
+          value: $(inputs.params.imageName)
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
@@ -63,23 +63,23 @@ spec:
       image: ibmcom/pipeline-base-image
       env:
         - name: IBMCLOUD_API_KEY
-          value: $(params.apikey)
+          value: $(inputs.params.apikey)
         - name: API
-          value: $(params.api)
+          value: $(inputs.params.api)
         - name: REGION
-          value: $(params.registryRegion)
+          value: $(inputs.params.registryRegion)
         - name: HOME
           value: "/root"
         - name: REGISTRY_NAMESPACE
-          value: $(params.registryNamespace)
+          value: $(inputs.params.registryNamespace)
         - name: IMAGE_NAME
-          value: $(params.imageName)
+          value: $(inputs.params.imageName)
         - name: ARCHIVE_DIR
           value: "/artifacts"
         - name: BUILD_NUMBER
           value: "0"
         - name: GIT_BRANCH
-          value: $(params.revision)
+          value: $(inputs.params.revision)
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
@@ -94,7 +94,7 @@ kind: Task
 metadata:
   name: validate-task
 spec:
-  
+  inputs:
     params:
       - name: repository
         description: the git repo
@@ -116,9 +116,9 @@ spec:
       image: alpine/git
       env:
         - name: REPOSITORY
-          value: $(params.repository)
+          value: $(inputs.params.repository)
         - name: REVISION
-          value: $(params.revision)
+          value: $(inputs.params.revision)
       command: ["/bin/sh", "-c"]
       args:
         - set -e -o pipefail;
@@ -128,13 +128,13 @@ spec:
       image: ibmcom/pipeline-base-image
       env:
         - name: IBMCLOUD_API_KEY
-          value: $(params.apikey)
+          value: $(inputs.params.apikey)
         - name: API
-          value: $(params.api)
+          value: $(inputs.params.api)
         - name: HOME
           value: "/root"
         - name: REGION
-          value: $(params.registryRegion)
+          value: $(inputs.params.registryRegion)
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
@@ -148,7 +148,7 @@ kind: Task
 metadata:
   name: deploy-task
 spec:
-  
+  inputs:
     params:
       - name: repository
         description: the git repo
@@ -176,9 +176,9 @@ spec:
       image: alpine/git
       env:
         - name: REPOSITORY
-          value: $(params.repository)
+          value: $(inputs.params.repository)
         - name: REVISION
-          value: $(params.revision)
+          value: $(inputs.params.revision)
       command: ["/bin/sh", "-c"]
       args:
         - set -e -o pipefail;
@@ -188,19 +188,19 @@ spec:
       image: ibmcom/pipeline-base-image
       env:
         - name: IBMCLOUD_API_KEY
-          value: $(params.apikey)
+          value: $(inputs.params.apikey)
         - name: API
-          value: $(params.api)
+          value: $(inputs.params.api)
         - name: REGION
-          value: $(params.clusterRegion)
+          value: $(inputs.params.clusterRegion)
         - name: HOME
           value: "/root"
         - name: DEPLOYMENT_FILE
-          value: $(params.deployment-file)
+          value: $(inputs.params.deployment-file)
         - name: CLUSTER_NAMESPACE
-          value: $(params.clusterNamespace)
+          value: $(inputs.params.clusterNamespace)
         - name: PIPELINE_KUBERNETES_CLUSTER_NAME
-          value: $(params.cluster)
+          value: $(inputs.params.cluster)
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
@@ -214,19 +214,19 @@ spec:
       image: ibmcom/pipeline-base-image
       env:
         - name: IBMCLOUD_API_KEY
-          value: $(params.apikey)
+          value: $(inputs.params.apikey)
         - name: API
-          value: $(params.api)
+          value: $(inputs.params.api)
         - name: REGION
-          value: $(params.clusterRegion)
+          value: $(inputs.params.clusterRegion)
         - name: HOME
           value: "/root"
         - name: DEPLOYMENT_FILE
-          value: $(params.deployment-file)
+          value: $(inputs.params.deployment-file)
         - name: CLUSTER_NAMESPACE
-          value: $(params.clusterNamespace)
+          value: $(inputs.params.clusterNamespace)
         - name: PIPELINE_KUBERNETES_CLUSTER_NAME
-          value: $(params.cluster)
+          value: $(inputs.params.cluster)
       command: ["/bin/bash", "-c"]
       args:
         - set -e -o pipefail;
