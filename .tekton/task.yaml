@@ -57,7 +57,7 @@ spec:
         - set -e -o pipefail;
           ibmcloud login -a $API -r $REGION;
           export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
-          source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh");
+          cd /workspace && source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh");
     - name: build-docker-image
       image: ibmcom/pipeline-base-image
       env:
