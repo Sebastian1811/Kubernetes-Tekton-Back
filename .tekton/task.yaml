@@ -38,4 +38,4 @@ spec:
           echo "Cloning $REPOSITORY";
           git clone -q -b $REVISION $REPOSITORY .;
 ---
-apiVersion:          
+apiVersion: tekton.dev/v1beta1
