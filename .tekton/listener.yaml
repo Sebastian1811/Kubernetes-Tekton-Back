@@ -24,7 +24,9 @@ spec:
       description: The Kubernetes cluster namespace
       default: production
     - name: registry-region
-    - name: registry-namespace  
+      description: region cr
+    - name: registry-namespace
+      description: cr namespace  
   resourcetemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
