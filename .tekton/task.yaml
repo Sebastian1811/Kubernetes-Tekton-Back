@@ -459,3 +459,56 @@ spec:
     - name: secure-properties
       secret:
         secretName: secure-properties
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: validate-task
+spec:
+  params:
+    - name: repository
+      description: the git repo
+    - name: revision
+      description: the revision
+      default: master
+    - name: apikey
+      description: the ibmcloud api key
+    - name: api
+      description: the ibmcloud api endpoint
+      default: "https://cloud.ibm.com"
+    - name: registryRegion
+      description: the ibmcloud registry region   
+  workspaces:
+  - name: task-pvc
+    mountPath: /artifacts         
+  steps:
+    - name: clone-repo
+      image: alpine/git
+      env:
+        - name: REPOSITORY
+          value: $(inputs.params.repository)
+        - name: REVISION
+          value: $(inputs.params.revision)
+      command: ["/bin/sh", "-c"]
+      args:
+        - set -e -o pipefail;
+          echo "Cloning $REPOSITORY";
+          git clone -q -b $REVISION $REPOSITORY .;
+    - name: check-vulnerabilities
+      image: ibmcom/pipeline-base-image
+      env:
+        - name: IBMCLOUD_API_KEY
+          value: $(inputs.params.apikey)
+        - name: API
+          value: $(inputs.params.api)
+        - name: HOME
+          value: "/root"
+        - name: REGION
+          value: $(inputs.params.registryRegion)
+      command: ["/bin/bash", "-c"]
+      args:
+        - set -e -o pipefail;
+          ibmcloud login -a $API -r $REGION;
+          while read line; do export $line; done < /artifacts/build.properties;
+          cp /artifacts/build.properties .;
+          source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_vulnerabilities.sh");
