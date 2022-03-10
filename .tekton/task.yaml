@@ -88,7 +88,7 @@ spec:
     #      export REGISTRY_URL=$(ibmcloud cr info | sed "2q;d" | awk '{for(i=1;i<=NF;i++) if ($i=="Registry") print $(i+1)}');
     #      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh");
 
-### hasta aqui resulta 
+# hasta aqui resulta 
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
