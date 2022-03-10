@@ -23,6 +23,16 @@ spec:
     - name: clusterNamespace
       description: The Kubernetes cluster namespace
       default: prod
+    - name: registry-Region
+      description: cr region
+    - name: registry-Namespace
+      description: cr namespace
+    - name: continuous-delivery-context-secret
+      description: name of the secret containing the continous DI context secrets
+      default: secure-properties
+    - name: container-registry-apikey-secret-key
+      description: apikey for cr
+      default: apikey        
   workspaces:
   - name: pipeline-pvc
   tasks:
