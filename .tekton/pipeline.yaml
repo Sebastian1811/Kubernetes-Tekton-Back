@@ -23,6 +23,17 @@ spec:
     - name: clusterNamespace
       description: The Kubernetes cluster namespace
       default: prod
+    - name: registry-Region
+      description: cr region
+    - name: registry-Namespace
+      description: cr namespace
+    - name: continuous-delivery-context-secret
+      description: Name of the secret containing the continuous delivery pipeline context secrets
+      default: secure-properties
+    - name: container-registry-apikey-secret-key
+      description: field in the secret that contains the api key used to login to ibmcloud container registry
+      default: apikey     
+
   workspaces:
   - name: pipeline-pvc
   tasks:
@@ -42,9 +53,25 @@ spec:
           value: $(params.registryRegion)
       workspaces:
       - name: task-pvc
-        workspace: pipeline-pvc          
-    - name: pipeline-validate-task
+        workspace: pipeline-pvc        
+    - name: pipeline-icr-containerize
       runAfter: [pipeline-build-task]
+      taskRef:
+        name: icr-containerize
+      params:
+        - name: continuous-delivery-context-secret
+          value: $(params.continous-delivery-context-secret)
+        - name: container-registry-apikey-secret-key
+          value: $(params.container-registry-apikey-secret-key)
+        - name: registry-region
+          value: $(registry-region)
+        - name: registry-namespace
+          value: $(registry-namespace)
+      workspaces:
+        - name: task-pvc
+          workspace: pipeline-pvc    
+    - name: pipeline-validate-task
+      runAfter: [pipeline-icr-containerize]
       taskRef:
         name: validate-task
       params:
