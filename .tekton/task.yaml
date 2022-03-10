@@ -510,7 +510,16 @@ spec:
     - name: secure-properties
       secret:
         secretName: secure-properties
-        
+
+
+
+
+
+
+
+
+
+
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
