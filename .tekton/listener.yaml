@@ -67,6 +67,10 @@ spec:
             value: $(params.clusterNamespace)
           - name: imageName
             value: $(imageName)
+          - name: registry-region
+            value: $(params.registry-region)
+          - name: registry-namespace
+            value: $(params.registry-namespace)    
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
