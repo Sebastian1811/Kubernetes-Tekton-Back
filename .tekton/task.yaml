@@ -58,35 +58,35 @@ spec:
     #      ibmcloud login -a $API -r $REGION;
     #      export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
     #      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh");
-    - name: build-docker-image
-      image: ibmcom/pipeline-base-image
-      env:
-        - name: IBMCLOUD_API_KEY
-          value: $(inputs.params.apikey)
-        - name: API
-          value: $(inputs.params.api)
-        - name: REGION
-          value: $(inputs.params.registryRegion)
-        - name: HOME
-          value: "/root"
-        - name: REGISTRY_NAMESPACE
-          value: $(inputs.params.registryNamespace)
-        - name: IMAGE_NAME
-          value: $(inputs.params.imageName)
-        - name: ARCHIVE_DIR
-          value: "/artifacts"
-        - name: BUILD_NUMBER
-          value: "0"
-        - name: GIT_BRANCH
-          value: $(inputs.params.revision)
-      command: ["/bin/bash", "-c"]
-      args:
-        - set -e -o pipefail;
-          ibmcloud login -a $API -r $REGION;
-          export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
-          export GIT_COMMIT=$(git rev-parse HEAD);
-          export REGISTRY_URL=$(ibmcloud cr info | sed "2q;d" | awk '{for(i=1;i<=NF;i++) if ($i=="Registry") print $(i+1)}');
-          source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh");
+    #- name: build-docker-image
+    #  image: ibmcom/pipeline-base-image
+    #  env:
+    #    - name: IBMCLOUD_API_KEY
+    #      value: $(inputs.params.apikey)
+    #    - name: API
+    #      value: $(inputs.params.api)
+    #    - name: REGION
+    #      value: $(inputs.params.registryRegion)
+    #    - name: HOME
+    #      value: "/root"
+    #    - name: REGISTRY_NAMESPACE
+    #      value: $(inputs.params.registryNamespace)
+    #    - name: IMAGE_NAME
+    #      value: $(inputs.params.imageName)
+    #    - name: ARCHIVE_DIR
+    #      value: "/artifacts"
+    #    - name: BUILD_NUMBER
+    #      value: "0"
+    #    - name: GIT_BRANCH
+    #      value: $(inputs.params.revision)
+    #  command: ["/bin/bash", "-c"]
+    #  args:
+    #    - set -e -o pipefail;
+    #      ibmcloud login -a $API -r $REGION;
+    #      export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
+    #      export GIT_COMMIT=$(git rev-parse HEAD);
+    #      export REGISTRY_URL=$(ibmcloud cr info | sed "2q;d" | awk '{for(i=1;i<=NF;i++) if ($i=="Registry") print $(i+1)}');
+    #      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh");
 
 ---
 apiVersion: tekton.dev/v1beta1
