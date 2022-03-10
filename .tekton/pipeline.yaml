@@ -67,7 +67,7 @@ spec:
         - name: registry-namespace
           value: $(params.registry-namespace)
       workspaces:
-        -name: task-pvc
+        - name: task-pvc
         workspace: pipeline-pvc    
       
     - name: pipeline-validate-task
