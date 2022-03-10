@@ -52,9 +52,25 @@ spec:
           value: $(params.registryRegion)
       workspaces:
       - name: task-pvc
-        workspace: pipeline-pvc          
+        workspace: pipeline-pvc   
+    - name: pipeline-icr-containerize
+      taskRef: 
+        name: icr-containerize
+      params:
+        - name:  continuous-delivery-context-secret
+          value: $(params.continuous-delivery-context-secret)
+        - name:  container-registry-apikey-secret-key
+          value: $(params.container-registry-apikey-secret-key)
+        - name: registry-region
+          value: $(params.registry-region)
+        - name: registry-namespace
+          value: $(params.registry-namespace)
+      workspaces:
+        -name: task-pvc
+        workspace: pipeline-pvc    
+      
     - name: pipeline-validate-task
-      runAfter: [pipeline-build-task]
+      runAfter: [pipeline-icr-containerize]
       taskRef:
         name: validate-task
       params:
