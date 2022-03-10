@@ -37,7 +37,6 @@ spec:
         - set -e -o pipefail;
           echo "Cloning $REPOSITORY";
           git clone -q -b $REVISION $REPOSITORY .;
-
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
