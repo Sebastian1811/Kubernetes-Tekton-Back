@@ -68,7 +68,7 @@ spec:
           value: $(params.registry-namespace)
       workspaces:
         - name: task-pvc
-        workspace: pipeline-pvc    
+          workspace: pipeline-pvc    
       
     - name: pipeline-validate-task
       runAfter: [pipeline-icr-containerize]
