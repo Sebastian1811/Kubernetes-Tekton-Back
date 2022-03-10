@@ -54,6 +54,7 @@ spec:
       - name: task-pvc
         workspace: pipeline-pvc   
     - name: pipeline-icr-containerize
+      runAfter: [pipeline-build-task]
       taskRef: 
         name: icr-containerize
       params:
