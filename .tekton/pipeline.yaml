@@ -83,6 +83,8 @@ spec:
           value: $(params.apikey)
         - name: registryRegion
           value: $(params.registryRegion)
+        - name: container-registry-apikey-secret-key
+          value: $(params.container-registry-apikey-secret-key)  
       workspaces:
       - name: task-pvc
         workspace: pipeline-pvc            
