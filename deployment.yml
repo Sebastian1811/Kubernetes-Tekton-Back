@@ -23,11 +23,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-app-service
+  name: lb-backend
   labels:
-    app: backend-app-service
+    app: lb-backend
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     # the port that this service should serve on
     - port: 3000
